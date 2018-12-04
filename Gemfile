@@ -1,8 +1,8 @@
 source "https://rubygems.org"
 
-gem 'base32', '= 0.3.2'
+gem 'base32', '~> 0.3.2'
 gem 'rotp', '~> 3.3', '>= 3.3.1'
-gem 'faraday', '= 0.12.2'
+gem 'faraday', '>= 0.12.2', '< 1.0'
 gem 'json', '~> 2.1'
 gem 'jwt', '~> 1.5', '>= 1.5.6'
 

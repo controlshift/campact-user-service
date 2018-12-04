@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["ControlShift".freeze]
-  s.date = "2018-12-03"
+  s.date = "2018-12-04"
   s.description = "Ruby wrapper for Campact User Service".freeze
   s.email = "hello@controlshiftlabs.com".freeze
   s.extra_rdoc_files = [
@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
     ".ruby-gemset",
     ".ruby-version",
     "Gemfile",
-    "Gemfile.lock",
     "LICENSE",
     "LICENSE.txt",
     "README.md",
@@ -50,9 +49,9 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<base32>.freeze, ["= 0.3.2"])
+      s.add_runtime_dependency(%q<base32>.freeze, ["~> 0.3.2"])
       s.add_runtime_dependency(%q<rotp>.freeze, [">= 3.3.1", "~> 3.3"])
-      s.add_runtime_dependency(%q<faraday>.freeze, ["= 0.12.2"])
+      s.add_runtime_dependency(%q<faraday>.freeze, ["< 1.0", ">= 0.12.2"])
       s.add_runtime_dependency(%q<json>.freeze, ["~> 2.1"])
       s.add_runtime_dependency(%q<jwt>.freeze, [">= 1.5.6", "~> 1.5"])
       s.add_development_dependency(%q<byebug>.freeze, [">= 0"])
@@ -66,9 +65,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<pry-byebug>.freeze, ["~> 3.6"])
       s.add_development_dependency(%q<faraday-detailed_logger>.freeze, [">= 2.1.2", "~> 2.1"])
     else
-      s.add_dependency(%q<base32>.freeze, ["= 0.3.2"])
+      s.add_dependency(%q<base32>.freeze, ["~> 0.3.2"])
       s.add_dependency(%q<rotp>.freeze, [">= 3.3.1", "~> 3.3"])
-      s.add_dependency(%q<faraday>.freeze, ["= 0.12.2"])
+      s.add_dependency(%q<faraday>.freeze, ["< 1.0", ">= 0.12.2"])
       s.add_dependency(%q<json>.freeze, ["~> 2.1"])
       s.add_dependency(%q<jwt>.freeze, [">= 1.5.6", "~> 1.5"])
       s.add_dependency(%q<byebug>.freeze, [">= 0"])
@@ -83,9 +82,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<faraday-detailed_logger>.freeze, [">= 2.1.2", "~> 2.1"])
     end
   else
-    s.add_dependency(%q<base32>.freeze, ["= 0.3.2"])
+    s.add_dependency(%q<base32>.freeze, ["~> 0.3.2"])
     s.add_dependency(%q<rotp>.freeze, [">= 3.3.1", "~> 3.3"])
-    s.add_dependency(%q<faraday>.freeze, ["= 0.12.2"])
+    s.add_dependency(%q<faraday>.freeze, ["< 1.0", ">= 0.12.2"])
     s.add_dependency(%q<json>.freeze, ["~> 2.1"])
     s.add_dependency(%q<jwt>.freeze, [">= 1.5.6", "~> 1.5"])
     s.add_dependency(%q<byebug>.freeze, [">= 0"])
