@@ -4,7 +4,6 @@ describe CampactUserService::Client do
   describe 'initialization' do
     let(:options) {
       {
-        scheme: 'https',
         host: 'demo.campact.de',
         port: '10003',
         faraday: { a_custom_option: 'foo', adapter: :an_adapter }

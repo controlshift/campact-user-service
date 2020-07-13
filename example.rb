@@ -19,7 +19,7 @@ def instrument_connection_with_extended_logging(client)
   end
 
   instrumented_connection = Faraday.new(
-    "#{client.scheme}://#{client.host}",
+    "https://#{client.host}",
     default_options,
     &faraday_builder
   )
@@ -57,7 +57,6 @@ when '1'
     token,
     'campact-staging-session',
     {
-      scheme: 'https',
       host: 'weact-adapter.staging.campact.de',
       topt_authorization: {user: username, secret: secret}
     }
@@ -68,7 +67,6 @@ when '2'
   account = CampactUserService.account(
     user_id,
     {
-      scheme: 'https',
       host: 'weact-adapter.staging.campact.de',
       topt_authorization: {user: username, secret: secret}
     }

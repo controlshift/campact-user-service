@@ -8,10 +8,9 @@ module CampactUserService
   class Client
     TIMEOUT = 5.freeze
 
-    attr_reader :connection, :scheme, :host, :port, :topt_authorization
+    attr_reader :connection, :host, :port, :topt_authorization
 
     def initialize(options)
-      @scheme = options.fetch(:scheme, 'https')
       @host = options.fetch(:host)
       @port = options[:port]
       @topt_authorization = options[:topt_authorization]
@@ -72,7 +71,7 @@ module CampactUserService
     end
 
     def endpoint
-      endpoint = "#{scheme}://#{host}"
+      endpoint = "https://#{host}"
       if !port.nil?
         endpoint << ":#{port}"
       end
