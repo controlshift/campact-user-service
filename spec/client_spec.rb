@@ -4,7 +4,6 @@ describe CampactUserService::Client do
   describe 'initialization' do
     let(:options) {
       {
-        scheme: 'https',
         host: 'demo.campact.de',
         port: '10003',
         faraday: { a_custom_option: 'foo', adapter: :an_adapter }
@@ -126,6 +125,23 @@ describe CampactUserService::Client do
         allow(response).to receive(:status).and_return(200)
 
         subject.get_request('/foo/bar', cookies: {'foo' => 'bar', 'xyz' => 'abc'})
+      end
+
+      it 'should set TOTP authorization header' do
+        allow(response).to receive(:status).and_return(200)
+        allow(response).to receive(:body).and_return(nil)
+
+        totp_secret = Base32.encode('shh! a secret!').gsub('=', '')
+
+        totp = double
+        expect(totp).to receive(:now).and_return('totp_token')
+        expect(ROTP::TOTP).to receive(:new).with(totp_secret, hash_including(digest: 'sha256', digits: 8, interval: 30)).and_return(totp)
+
+        expect(headers_builder).to receive(:[]=).with('authorization', 'Token api_user:totp_token')
+
+        subject = CampactUserService::Client.new(host: 'demo.campact.de', topt_authorization: {user: 'api_user', secret: 'shh! a secret!'})
+
+        subject.get_request('/foo/bar')
       end
 
       it 'should parse JSON response on successful response' do
