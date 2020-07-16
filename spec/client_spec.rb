@@ -131,7 +131,7 @@ describe CampactUserService::Client do
         allow(response).to receive(:status).and_return(200)
         allow(response).to receive(:body).and_return(nil)
 
-        totp_secret = Base32.encode('shh! a secret!').gsub('=', '')
+        totp_secret = ROTP::Base32.encode('shh! a secret!')
 
         totp = double
         expect(totp).to receive(:now).and_return('totp_token')

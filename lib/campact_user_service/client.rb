@@ -1,6 +1,5 @@
 require 'faraday'
 require 'json'
-require 'base32'
 require 'rotp'
 require 'campact_user_service/response_error'
 

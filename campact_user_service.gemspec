@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["ControlShift".freeze]
-  s.date = "2020-06-25"
+  s.date = "2020-07-16"
   s.description = "Ruby wrapper for Campact User Service".freeze
   s.email = "hello@controlshiftlabs.com".freeze
   s.extra_rdoc_files = [
@@ -51,8 +51,7 @@ Gem::Specification.new do |s|
   end
 
   if s.respond_to? :add_runtime_dependency then
-    s.add_runtime_dependency(%q<base32>.freeze, ["~> 0.3.2"])
-    s.add_runtime_dependency(%q<rotp>.freeze, ["~> 3.3", ">= 3.3.1"])
+    s.add_runtime_dependency(%q<rotp>.freeze, ["~> 6"])
     s.add_runtime_dependency(%q<faraday>.freeze, [">= 0.12.2", "< 1.0"])
     s.add_runtime_dependency(%q<json>.freeze, ["~> 2.1"])
     s.add_development_dependency(%q<byebug>.freeze, [">= 0"])
@@ -66,8 +65,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<faraday-detailed_logger>.freeze, ["~> 2.1", ">= 2.1.2"])
     s.add_development_dependency(%q<rubocop>.freeze, [">= 0"])
   else
-    s.add_dependency(%q<base32>.freeze, ["~> 0.3.2"])
-    s.add_dependency(%q<rotp>.freeze, ["~> 3.3", ">= 3.3.1"])
+    s.add_dependency(%q<rotp>.freeze, ["~> 6"])
     s.add_dependency(%q<faraday>.freeze, [">= 0.12.2", "< 1.0"])
     s.add_dependency(%q<json>.freeze, ["~> 2.1"])
     s.add_dependency(%q<byebug>.freeze, [">= 0"])
