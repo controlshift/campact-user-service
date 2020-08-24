@@ -8,7 +8,7 @@ module CampactUserService
     end
 
     def exists?
-      account && !account["id"].nil?
+      account && !account['external_id'].nil?
     end
 
     def subscribed_to_newsletter?
