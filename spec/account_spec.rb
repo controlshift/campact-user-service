@@ -18,7 +18,7 @@ describe CampactUserService::Account do
     it 'should return true where a valid user object is returned' do
       stub_request(:get, "https://test.com/v1/accounts/#{user_id}")
         .to_return(body: {
-          "id": "id-123"
+          "external_id": "id-123"
         }.to_json)
 
       expect(subject.exists?).to be_truthy
