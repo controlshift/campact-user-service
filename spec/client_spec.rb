@@ -53,7 +53,7 @@ describe CampactUserService::Client do
       it 'should raise error if status code is 3xx, 4xx or 5xx' do
         expect(request_builder).to receive(:url).with('/foo/bar')
         expect(request_builder_options).to receive(:timeout=).with(CampactUserService::Client::TIMEOUT)
-        expect(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::TIMEOUT)
+        expect(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::OPEN_TIMEOUT)
         allow(response).to receive(:status).and_return(unexpected_status_code)
         allow(response).to receive(:body).and_return('An error occurred')
 
@@ -68,7 +68,7 @@ describe CampactUserService::Client do
     it 'should return nil if status code is 404' do
       expect(request_builder).to receive(:url).with('/foo/bar')
       expect(request_builder_options).to receive(:timeout=).with(CampactUserService::Client::TIMEOUT)
-      expect(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::TIMEOUT)
+      expect(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::OPEN_TIMEOUT)
       allow(response).to receive(:status).and_return(404)
 
       response = subject.send(method_under_test, '/foo/bar')
@@ -97,7 +97,7 @@ describe CampactUserService::Client do
     it 'should perform get request on provided path and return true if response is 204' do
       expect(request_builder).to receive(:url).with('/foo/bar')
       expect(request_builder_options).to receive(:timeout=).with(CampactUserService::Client::TIMEOUT)
-      expect(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::TIMEOUT)
+      expect(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::OPEN_TIMEOUT)
       allow(response).to receive(:status).and_return(204)
 
       expect(subject.get_request('/foo/bar')).to be_truthy
@@ -109,7 +109,7 @@ describe CampactUserService::Client do
       before :each do
         allow(request_builder).to receive(:url).with('/foo/bar')
         allow(request_builder_options).to receive(:timeout=).with(CampactUserService::Client::TIMEOUT)
-        allow(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::TIMEOUT)
+        allow(request_builder_options).to receive(:open_timeout=).with(CampactUserService::Client::OPEN_TIMEOUT)
         allow(request_builder).to receive(:headers).and_return(headers_builder)
       end
 

@@ -5,7 +5,8 @@ require 'campact_user_service/response_error'
 
 module CampactUserService
   class Client
-    TIMEOUT = 5.freeze
+    TIMEOUT = 60.freeze
+    OPEN_TIMEOUT = 20.freeze
 
     attr_reader :connection, :host, :port, :topt_authorization
 
@@ -33,7 +34,7 @@ module CampactUserService
       response = connection.send(verb.to_sym) do |req|
         req.url path
         req.options.timeout = TIMEOUT
-        req.options.open_timeout = TIMEOUT
+        req.options.open_timeout = OPEN_TIMEOUT
         if options.key?(:cookies)
           req.headers['Cookie'] = format_cookies(options[:cookies])
         end
