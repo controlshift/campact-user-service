@@ -1,5 +1,5 @@
 # campact-user-service
-[![Build Status](https://travis-ci.org/controlshift/campact-user-service.svg?branch=master)](https://travis-ci.org/controlshift/campact-user-service)
+[![CI Status](https://github.com/controlshift/campact-user-service/actions/workflows/ci.yml/badge.svg)](https://github.com/controlshift/campact-user-service/actions/workflows/ci.yml)
 
 a ruby gem that wraps the Campact user service API
 
