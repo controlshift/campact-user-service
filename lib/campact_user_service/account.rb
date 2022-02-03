@@ -2,6 +2,7 @@ module CampactUserService
   class Account
     attr_reader :client, :user_id
 
+    # user_id can either be the user's external_account_id or their email address
     def initialize(client, user_id)
       @client = client
       @user_id = user_id

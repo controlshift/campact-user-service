@@ -62,10 +62,10 @@ when '1'
     }
   )
 when '2'
-  puts "I'll need a user ID (email address). In practice I won't need this here because it can be derived through the session token"
-  user_id = gets.chomp
+  puts "I'll need a user account ID. In practice I won't need this here because it can be derived through the session token"
+  external_account_id = gets.chomp
   account = CampactUserService.account(
-    user_id,
+    external_account_id,
     {
       host: 'weact-adapter.staging.campact.de',
       topt_authorization: {user: username, secret: secret}

@@ -24,11 +24,11 @@ describe CampactUserService do
       options = { foo: 'bar', foo2: 'bar2' }
       client = double
       expect(CampactUserService::Client).to receive(:new).with(options).and_return(client)
-      user_id = 'test@example.com'
+      external_account_id = '189b6864-d58a-4f49-8370-4ae0b854a40e'
       account_api = double
-      expect(CampactUserService::Account).to receive(:new).with(client, user_id).and_return(account_api)
+      expect(CampactUserService::Account).to receive(:new).with(client, external_account_id).and_return(account_api)
 
-      account = subject.account(user_id, options)
+      account = subject.account(external_account_id, options)
 
       expect(account).to be(account_api)
     end
