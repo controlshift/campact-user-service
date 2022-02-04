@@ -7,13 +7,13 @@ describe CampactUserService::Session do
 
   subject { CampactUserService::Session.new(client, session_id, session_cookie_name) }
 
-  describe '#external_user_id' do
+  describe '#external_account_id' do
     it 'should be present' do
       stub_request(:get, 'https://test.com/v1/sessions')
         .with(headers: {'Cookie' => "cus-session=#{session_id};"})
-        .to_return(body: {external_user_id: '189b6864-d58a-4f49-8370-4ae0b854a40e'}.to_json)
+        .to_return(body: {external_account_id: '189b6864-d58a-4f49-8370-4ae0b854a40e'}.to_json)
 
-      expect(subject.external_user_id).to eq('189b6864-d58a-4f49-8370-4ae0b854a40e')
+      expect(subject.external_account_id).to eq('189b6864-d58a-4f49-8370-4ae0b854a40e')
     end
   end
 
