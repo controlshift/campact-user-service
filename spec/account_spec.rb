@@ -165,9 +165,7 @@ describe CampactUserService::Account do
     it 'should allow prefilling where the user has opted-in' do
       stub_request(:get, "https://test.com/v1/accounts/#{user_id}")
         .to_return(body: {
-          "preferences": {
-            "prefill_forms": "allowed"
-          }
+          "prefill_forms_state":  "allowed"
         }.to_json)
 
       expect(subject.allow_prefill?).to be_truthy
@@ -176,9 +174,7 @@ describe CampactUserService::Account do
     it 'should not allow prefilling where the user has not decided' do
       stub_request(:get, "https://test.com/v1/accounts/#{user_id}")
         .to_return(body: {
-          "preferences": {
-            "prefill_forms": "undecided"
-          }
+          "prefill_forms_state": "undecided"
         }.to_json)
 
       expect(subject.allow_prefill?).to be_falsey
@@ -187,12 +183,39 @@ describe CampactUserService::Account do
     it 'should not allow prefilling where the user has opted out' do
       stub_request(:get, "https://test.com/v1/accounts/#{user_id}")
         .to_return(body: {
-          "preferences": {
-            "prefill_forms": "disallowed"
-          }
+          "prefill_forms_state": "forbidden"
         }.to_json)
 
       expect(subject.allow_prefill?).to be_falsey
+    end
+  end
+
+  describe "#prefill_undecided?" do
+    it 'should be true if the user has not decided' do
+      stub_request(:get, "https://test.com/v1/accounts/#{user_id}")
+        .to_return(body: {
+          "prefill_forms_state": "undecided"
+        }.to_json)
+
+      expect(subject.prefill_undecided?).to be_truthy
+    end
+
+    it 'should be false if the user has opted-in' do
+      stub_request(:get, "https://test.com/v1/accounts/#{user_id}")
+        .to_return(body: {
+          "prefill_forms_state":  "allowed"
+        }.to_json)
+
+      expect(subject.prefill_undecided?).to be_falsey
+    end
+
+    it 'should be false if the user has opted out' do
+      stub_request(:get, "https://test.com/v1/accounts/#{user_id}")
+        .to_return(body: {
+          "prefill_forms_state":  "forbidden"
+        }.to_json)
+
+      expect(subject.prefill_undecided?).to be_falsey
     end
   end
 end

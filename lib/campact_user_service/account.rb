@@ -17,8 +17,13 @@ module CampactUserService
       subscriptions.any? {|s| s['type'] == 'newsletter' }
     end
 
+    def prefill_undecided?
+      prefill = account['prefill_forms_state']
+      prefill.to_s == 'undecided'
+    end
+
     def allow_prefill?
-      prefill = account.dig('preferences', 'prefill_forms')
+      prefill = account['prefill_forms_state']
       prefill.to_s == 'allowed'
     end
 
