@@ -22,7 +22,7 @@ module CampactUserService
       end
     end
 
-    %i(get delete).each do |verb|
+    %i(get delete patch).each do |verb|
       define_method("#{verb}_request") do |path, options={}|
         request(verb, path, options)
       end
@@ -37,6 +37,11 @@ module CampactUserService
         req.options.open_timeout = OPEN_TIMEOUT
         if options.key?(:cookies)
           req.headers['Cookie'] = format_cookies(options[:cookies])
+        end
+
+        if options.key?(:body)
+          req.headers['Content-Type'] = 'application/json'
+          req.body = options[:body].to_json
         end
 
         if topt_authorization
