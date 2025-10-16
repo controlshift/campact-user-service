@@ -9,9 +9,9 @@ module CampactUserService
       CampactUserService::Session.new(client, session_id, session_cookie_name)
     end
 
-    def account(external_account_id, options)
+    def account(account_id, options)
       client = CampactUserService::Client.new(options)
-      CampactUserService::Account.new(client, external_account_id)
+      CampactUserService::Account.new(client, account_id)
     end
   end
 end
