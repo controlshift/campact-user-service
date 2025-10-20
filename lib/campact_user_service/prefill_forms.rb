@@ -9,14 +9,14 @@ module CampactUserService
 
     def update_prefill_forms(prefill_forms_state:, petition_slug:, **additional_params)
       params = {
-        state: prefill_forms_state,
-        slug: petition_slug
+        prefill_forms: {
+          state: prefill_forms_state,
+          slug: petition_slug
+        }.merge(additional_params)
       }
-      params.merge!(additional_params)
 
-      client.patch_request("/v1/prefill_forms/#{account_id}", body: {
-        prefill_forms: params
-      })
+      path = "/v1/prefill_forms?account_id=#{account_id}"
+      client.patch_request(path, body: params)
     end
   end
 end

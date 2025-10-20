@@ -14,7 +14,7 @@ describe CampactUserService::PrefillForms do
 
   describe '#update_prefill_forms' do
     it 'should update the prefill forms state with just the state and petition slug' do
-      stub_patch_prefill_forms = stub_request(:patch, "https://test.com/v1/prefill_forms/#{account_id}")
+      stub_patch_prefill_forms = stub_request(:patch, "https://test.com/v1/prefill_forms?account_id=#{account_id}")
         .with(body: {
           prefill_forms: {
             state: 'allowed',
@@ -38,7 +38,7 @@ describe CampactUserService::PrefillForms do
         utm_placement: 'a placement',
         utm_target: 'a target'
       }
-      stub_patch_prefill_forms = stub_request(:patch, "https://test.com/v1/prefill_forms/#{account_id}")
+      stub_patch_prefill_forms = stub_request(:patch, "https://test.com/v1/prefill_forms?account_id=#{account_id}")
         .with(body: {
           prefill_forms: {
             state: 'allowed',
