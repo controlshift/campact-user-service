@@ -3,9 +3,11 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'campact_user_service'
 require 'faraday/detailed_logger'
 
+service_host = ENV['SERVICE_HOST'] || 'weact-adapter.staging.campact.de'
+
 def instrument_connection_with_extended_logging(client)
   default_options = {
-    ssl: { verify: true },
+    ssl: { verify: false },
     headers: {
       'Accept' => "application/json;q=0.1",
       'Accept-Charset' => "utf-8",
@@ -29,7 +31,7 @@ end
 # Pick which API to connect to
 # 1 for session
 # 2 for user
-puts "Which user service are you going to use?\n\t1) session\n\t2) user"
+puts "Which user service are you going to use?\n\t1) session\n\t2) user\n\t3) prefill forms"
 option = gets.chomp
 
 # Get TOTP credentials
@@ -57,7 +59,7 @@ when '1'
     token,
     'campact-staging-session',
     {
-      host: 'weact-adapter.staging.campact.de',
+      host: service_host,
       topt_authorization: {user: username, secret: secret}
     }
   )
@@ -67,7 +69,15 @@ when '2'
   account = CampactUserService.account(
     account_id,
     {
-      host: 'weact-adapter.staging.campact.de',
+      host: service_host,
+      topt_authorization: {user: username, secret: secret}
+    }
+  )
+when '3'
+  puts "I'll need a user account ID. In practice I won't need this here because it can be derived through the session token"
+  account_id = gets.chomp
+  prefill_forms = CampactUserService.prefill_forms(account_id, {
+      host: service_host,
       topt_authorization: {user: username, secret: secret}
     }
   )
