@@ -51,5 +51,25 @@ describe CampactUserService::PrefillForms do
 
       assert_requested(stub_patch_prefill_forms)
     end
+
+    it 'should escape special characters in account_id' do
+      unescaped_account_id = 'user@example.com'
+      escaped_account_id = 'user%40example.com'
+
+      prefill_forms = CampactUserService::PrefillForms.new(client, unescaped_account_id)
+
+      stub_patch_prefill_forms = stub_request(:patch, "https://test.com/v1/prefill_forms?account_id=#{escaped_account_id}")
+        .with(body: {
+          prefill_forms: {
+            state: 'allowed',
+            slug: 'save-the-forest'
+          }
+        })
+        .to_return(status: 204)
+
+      prefill_forms.update_prefill_forms(prefill_forms_state: 'allowed', campaign_slug: 'save-the-forest')
+
+      assert_requested(stub_patch_prefill_forms)
+    end
   end
 end
