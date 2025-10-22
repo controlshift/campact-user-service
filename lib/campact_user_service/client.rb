@@ -19,6 +19,7 @@ module CampactUserService
 
       @connection = Faraday.new(endpoint, faraday_options) do |faraday|
         faraday.adapter adapter
+        faraday.request :json
       end
     end
 
@@ -40,8 +41,7 @@ module CampactUserService
         end
 
         if options.key?(:body)
-          req.headers['Content-Type'] = 'application/json'
-          req.body = options[:body].to_json
+          req.body = options[:body]
         end
 
         if topt_authorization

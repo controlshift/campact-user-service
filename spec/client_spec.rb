@@ -11,6 +11,10 @@ describe CampactUserService::Client do
     }
     let(:faraday_builder) { double(adapter: true) }
 
+    before :each do
+      allow(faraday_builder).to receive(:request).with(:json)
+    end
+
     it 'should initialize connection from options' do
       expect(faraday_builder).to receive(:adapter).with(:an_adapter)
 
@@ -87,7 +91,7 @@ describe CampactUserService::Client do
     subject { CampactUserService::Client.new(host: 'demo.campact.de') }
 
     before :each do
-      expect(Faraday).to receive(:new).and_yield(double(adapter: true)).and_return(connection)
+      expect(Faraday).to receive(:new).and_yield(double(adapter: true, request: true)).and_return(connection)
       expect(request_builder).to receive(:options).at_least(:once).and_return(request_builder_options)
       expect(connection).to receive(:get).and_yield(request_builder).and_return(response)
     end
@@ -167,7 +171,7 @@ describe CampactUserService::Client do
     subject { CampactUserService::Client.new(host: 'demo.campact.de') }
 
     before :each do
-      expect(Faraday).to receive(:new).and_yield(double(adapter: true)).and_return(connection)
+      expect(Faraday).to receive(:new).and_yield(double(adapter: true, request: true)).and_return(connection)
       expect(request_builder).to receive(:options).at_least(:once).and_return(request_builder_options)
       expect(connection).to receive(:delete).and_yield(request_builder).and_return(response)
     end
@@ -186,7 +190,7 @@ describe CampactUserService::Client do
 
     context 'with faraday stubbed' do
       before :each do
-        expect(Faraday).to receive(:new).and_yield(double(adapter: true)).and_return(connection)
+        expect(Faraday).to receive(:new).and_yield(double(adapter: true, request: true)).and_return(connection)
         expect(request_builder).to receive(:options).at_least(:once).and_return(request_builder_options)
         expect(connection).to receive(:patch).and_yield(request_builder).and_return(response)
       end
