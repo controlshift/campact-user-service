@@ -23,7 +23,7 @@ describe CampactUserService::PrefillForms do
         })
         .to_return(status: 204)
 
-      subject.update_prefill_forms(prefill_forms_state: 'allowed', petition_slug: 'save-the-forest')
+      subject.update_prefill_forms(prefill_forms_state: 'allowed', campaign_slug: 'save-the-forest')
 
       assert_requested(stub_patch_prefill_forms)
     end
@@ -47,7 +47,7 @@ describe CampactUserService::PrefillForms do
         })
         .to_return(status: 204)
 
-      subject.update_prefill_forms(prefill_forms_state: 'allowed', petition_slug: 'save-the-forest', **utm_params)
+      subject.update_prefill_forms(prefill_forms_state: 'allowed', campaign_slug: 'save-the-forest', **utm_params)
 
       assert_requested(stub_patch_prefill_forms)
     end

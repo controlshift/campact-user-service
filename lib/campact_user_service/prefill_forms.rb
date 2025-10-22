@@ -7,11 +7,11 @@ module CampactUserService
       @account_id = account_id
     end
 
-    def update_prefill_forms(prefill_forms_state:, petition_slug:, **additional_params)
+    def update_prefill_forms(prefill_forms_state:, campaign_slug:, **additional_params)
       params = {
         prefill_forms: {
           state: prefill_forms_state,
-          slug: petition_slug
+          slug: campaign_slug
         }.merge(additional_params)
       }
 
