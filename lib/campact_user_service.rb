@@ -1,6 +1,7 @@
 require 'campact_user_service/client'
 require 'campact_user_service/session'
 require 'campact_user_service/account'
+require 'campact_user_service/prefill_forms'
 
 module CampactUserService
   class << self
@@ -9,9 +10,14 @@ module CampactUserService
       CampactUserService::Session.new(client, session_id, session_cookie_name)
     end
 
-    def account(external_account_id, options)
+    def account(account_id, options)
       client = CampactUserService::Client.new(options)
-      CampactUserService::Account.new(client, external_account_id)
+      CampactUserService::Account.new(client, account_id)
+    end
+
+    def prefill_forms(account_id, options)
+      client = CampactUserService::Client.new(options)
+      CampactUserService::PrefillForms.new(client, account_id)
     end
   end
 end

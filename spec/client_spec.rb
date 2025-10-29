@@ -11,6 +11,10 @@ describe CampactUserService::Client do
     }
     let(:faraday_builder) { double(adapter: true) }
 
+    before :each do
+      allow(faraday_builder).to receive(:request).with(:json)
+    end
+
     it 'should initialize connection from options' do
       expect(faraday_builder).to receive(:adapter).with(:an_adapter)
 
@@ -87,7 +91,7 @@ describe CampactUserService::Client do
     subject { CampactUserService::Client.new(host: 'demo.campact.de') }
 
     before :each do
-      expect(Faraday).to receive(:new).and_yield(double(adapter: true)).and_return(connection)
+      expect(Faraday).to receive(:new).and_yield(double(adapter: true, request: true)).and_return(connection)
       expect(request_builder).to receive(:options).at_least(:once).and_return(request_builder_options)
       expect(connection).to receive(:get).and_yield(request_builder).and_return(response)
     end
@@ -167,11 +171,49 @@ describe CampactUserService::Client do
     subject { CampactUserService::Client.new(host: 'demo.campact.de') }
 
     before :each do
-      expect(Faraday).to receive(:new).and_yield(double(adapter: true)).and_return(connection)
+      expect(Faraday).to receive(:new).and_yield(double(adapter: true, request: true)).and_return(connection)
       expect(request_builder).to receive(:options).at_least(:once).and_return(request_builder_options)
       expect(connection).to receive(:delete).and_yield(request_builder).and_return(response)
     end
 
     include_examples 'error handling'
+  end
+
+  describe '#patch_request' do
+    let(:connection) { double }
+    let(:request_builder) { double }
+    let(:request_builder_options) { double }
+    let(:response) { double(body: '') }
+    let(:method_under_test) { :patch_request }
+
+    subject { CampactUserService::Client.new(host: 'demo.campact.de') }
+
+    context 'with faraday stubbed' do
+      before :each do
+        expect(Faraday).to receive(:new).and_yield(double(adapter: true, request: true)).and_return(connection)
+        expect(request_builder).to receive(:options).at_least(:once).and_return(request_builder_options)
+        expect(connection).to receive(:patch).and_yield(request_builder).and_return(response)
+      end
+
+      include_examples 'error handling'
+    end
+
+    context 'with HTTP connection stubbed' do
+      before(:each) do
+        WebMock.disable_net_connect!
+      end
+
+      it 'should send the body included in options' do
+        stub_patch =
+          stub_request(:patch, 'https://demo.campact.de/foo/bar')
+            .with(body: { a_field: 'foo', another_field: 'bar' }.to_json,
+                  headers: { 'Content-Type'=>'application/json' })
+            .to_return(status: 204)
+
+        subject.patch_request('/foo/bar', body: { a_field: 'foo', another_field: 'bar' })
+
+        assert_requested(stub_patch)
+      end
+    end
   end
 end

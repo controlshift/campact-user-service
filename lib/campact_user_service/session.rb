@@ -8,8 +8,8 @@ module CampactUserService
       @session_cookie_name = session_cookie_name
     end
 
-    def external_account_id
-      session["external_account_id"]
+    def account_id
+      session["account_id"]
     end
 
     def has_soft_login_session?

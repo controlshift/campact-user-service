@@ -19,10 +19,11 @@ module CampactUserService
 
       @connection = Faraday.new(endpoint, faraday_options) do |faraday|
         faraday.adapter adapter
+        faraday.request :json
       end
     end
 
-    %i(get delete).each do |verb|
+    %i(get delete patch).each do |verb|
       define_method("#{verb}_request") do |path, options={}|
         request(verb, path, options)
       end
@@ -37,6 +38,10 @@ module CampactUserService
         req.options.open_timeout = OPEN_TIMEOUT
         if options.key?(:cookies)
           req.headers['Cookie'] = format_cookies(options[:cookies])
+        end
+
+        if options.key?(:body)
+          req.body = options[:body]
         end
 
         if topt_authorization

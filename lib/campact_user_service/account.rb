@@ -2,7 +2,7 @@ module CampactUserService
   class Account
     attr_reader :client, :user_id
 
-    # user_id can either be the user's external_account_id or their email address
+    # user_id can either be the user's account_id or their email address
     def initialize(client, user_id)
       @client = client
       @user_id = user_id
@@ -17,8 +17,13 @@ module CampactUserService
       subscriptions.any? {|s| s['type'] == 'newsletter' }
     end
 
+    def prefill_undecided?
+      prefill = account['prefill_forms_state']
+      prefill.to_s == 'undecided'
+    end
+
     def allow_prefill?
-      prefill = account.dig('preferences', 'prefill_forms')
+      prefill = account['prefill_forms_state']
       prefill.to_s == 'allowed'
     end
 
