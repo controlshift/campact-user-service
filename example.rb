@@ -31,6 +31,7 @@ end
 # Pick which API to connect to
 # 1 for session
 # 2 for user
+# 3 for prefill forms
 puts "Which user service are you going to use?\n\t1) session\n\t2) user\n\t3) prefill forms"
 option = gets.chomp
 
