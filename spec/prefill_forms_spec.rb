@@ -23,9 +23,10 @@ describe CampactUserService::PrefillForms do
         })
         .to_return(status: 204)
 
-      subject.update_prefill_forms(prefill_forms_state: 'allowed', campaign_slug: 'save-the-forest')
+      result = subject.update_prefill_forms(prefill_forms_state: 'allowed', campaign_slug: 'save-the-forest')
 
       assert_requested(stub_patch_prefill_forms)
+      expect(result).to be_truthy
     end
 
     it 'should update the prefill forms state including UTM parameters' do
