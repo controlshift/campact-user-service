@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.3.1] - 2026-02-09
+
+### Dependency updates
+- Add rake to development dependency in Gemspec
+
 ## [4.3.0] - 2026-02-09
 
 ### Dependency updates
