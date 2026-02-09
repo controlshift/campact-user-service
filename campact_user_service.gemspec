@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "faraday-detailed_logger", "~> 2.1"
   spec.add_development_dependency "pry-byebug", "~> 3.6"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rdoc", "~> 6.0"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rubocop"
