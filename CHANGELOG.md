@@ -4,6 +4,7 @@
 
 ### Dependency updates
 - Fix homepage link in Gempsec
+- Require MFA for publishing
 - Update required ruby version in Gemspec
 
 ## [4.3.1] - 2026-02-09
