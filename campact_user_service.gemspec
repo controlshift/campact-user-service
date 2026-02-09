@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.name = "campact_user_service"
   spec.version = File.read(File.expand_path("VERSION", __dir__)).strip
   spec.authors = ["ControlShift"]
-  spec.email = ["hello@controlshiftlabs.com"]
+  spec.email = ["talk@controlshiftlabs.com"]
 
   spec.summary = "Ruby wrapper for Campact User Service"
   spec.description = "Ruby wrapper for Campact User Service"
