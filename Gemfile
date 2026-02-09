@@ -1,16 +1,16 @@
 source "https://rubygems.org"
 
 gem 'rotp', '~> 6'
-gem 'faraday', '~> 1.0'
+gem 'faraday', '~> 2.14'
 gem 'json', '~> 2.1'
 
 group :development do
+  gem 'rake'
   gem 'byebug', '>= 0'
   gem 'rspec', '>= 0'
   gem 'shoulda', '>= 0'
   gem 'webmock', '>= 0'
   gem 'rdoc', '~> 6.0', '>= 6.0.4'
-  gem 'juwelier', git: 'https://github.com/flajann2/juwelier.git'
   gem 'simplecov', '= 0.16.1'
   gem 'pry-byebug', '~> 3.6'
   gem 'faraday-detailed_logger', '~> 2.1', '>= 2.1.2'
