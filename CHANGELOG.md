@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.3.2] - 2026-02-09
+
+### Dependency updates
+- Fix homepage link in Gempsec
+- Update required ruby version in Gemspec
+
 ## [4.3.1] - 2026-02-09
 
 ### Dependency updates
