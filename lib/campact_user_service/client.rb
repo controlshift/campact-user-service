@@ -1,4 +1,3 @@
-require 'base64'
 require 'faraday'
 require 'json'
 require 'campact_user_service/response_error'
@@ -20,6 +19,7 @@ module CampactUserService
       @connection = Faraday.new(endpoint, faraday_options) do |faraday|
         faraday.adapter adapter
         faraday.request :json
+        faraday.request :authorization, :basic, basic_auth[:user], basic_auth[:password] if basic_auth
       end
     end
 
@@ -44,9 +44,6 @@ module CampactUserService
           req.body = options[:body]
         end
 
-        if basic_auth
-          req.headers['authorization'] = authorization(basic_auth)
-        end
       end
 
       case response.status
@@ -93,11 +90,5 @@ module CampactUserService
       end
     end
 
-    def authorization(basic_auth_options)
-      user     = basic_auth_options.fetch(:user)
-      password = basic_auth_options.fetch(:password)
-      credentials = Base64.strict_encode64("#{user}:#{password}")
-      "Basic #{credentials}"
-    end
   end
 end
