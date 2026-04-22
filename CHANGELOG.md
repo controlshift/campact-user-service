@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.3.3] - 2026-04-22
+- Switch to Basic Auth from TOTP auth
+
 ## [4.3.2] - 2026-02-09
 
 ### Dependency updates
