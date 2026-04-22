@@ -1,6 +1,5 @@
 require 'faraday'
 require 'json'
-require 'rotp'
 require 'campact_user_service/response_error'
 
 module CampactUserService
@@ -8,18 +7,19 @@ module CampactUserService
     TIMEOUT = 60.freeze
     OPEN_TIMEOUT = 20.freeze
 
-    attr_reader :connection, :host, :port, :topt_authorization
+    attr_reader :connection, :host, :port, :basic_auth
 
     def initialize(options)
       @host = options.fetch(:host)
       @port = options[:port]
-      @topt_authorization = options[:topt_authorization]
+      @basic_auth = options[:basic_auth]
       faraday_options = default_faraday_options.merge(options.delete(:faraday) || {})
       adapter = faraday_options.delete(:adapter) || Faraday.default_adapter
 
       @connection = Faraday.new(endpoint, faraday_options) do |faraday|
         faraday.adapter adapter
         faraday.request :json
+        faraday.request :authorization, :basic, basic_auth[:user], basic_auth[:password] if basic_auth
       end
     end
 
@@ -44,9 +44,6 @@ module CampactUserService
           req.body = options[:body]
         end
 
-        if topt_authorization
-          req.headers['authorization'] = authorization(topt_authorization)
-        end
       end
 
       case response.status
@@ -93,23 +90,5 @@ module CampactUserService
       end
     end
 
-    def authorization(totp_options)
-      user = totp_options.fetch(:user)
-      secret = totp_options.fetch(:secret)
-
-      token = [user, auth_pass(secret)].join(':')
-
-      "Token #{token}"
-    end
-
-    def auth_pass(secret)
-      totp_secret = ROTP::Base32.encode(secret)
-
-      ROTP::TOTP.new(totp_secret, {
-        digest: 'sha256',
-        digits: 8,
-        interval: 30
-      }).now
-    end
   end
 end

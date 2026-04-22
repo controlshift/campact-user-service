@@ -1,3 +1,4 @@
+require 'base64'
 require 'spec_helper'
 
 describe CampactUserService::Client do
@@ -131,23 +132,6 @@ describe CampactUserService::Client do
         subject.get_request('/foo/bar', cookies: {'foo' => 'bar', 'xyz' => 'abc'})
       end
 
-      it 'should set TOTP authorization header' do
-        allow(response).to receive(:status).and_return(200)
-        allow(response).to receive(:body).and_return(nil)
-
-        totp_secret = ROTP::Base32.encode('shh! a secret!')
-
-        totp = double
-        expect(totp).to receive(:now).and_return('totp_token')
-        expect(ROTP::TOTP).to receive(:new).with(totp_secret, hash_including(digest: 'sha256', digits: 8, interval: 30)).and_return(totp)
-
-        expect(headers_builder).to receive(:[]=).with('authorization', 'Token api_user:totp_token')
-
-        subject = CampactUserService::Client.new(host: 'demo.campact.de', topt_authorization: {user: 'api_user', secret: 'shh! a secret!'})
-
-        subject.get_request('/foo/bar')
-      end
-
       it 'should parse JSON response on successful response' do
         allow(response).to receive(:status).and_return(200)
         allow(response).to receive(:body).and_return({a_field: 'foo', another_field: 'bar'}.to_json)
@@ -158,6 +142,24 @@ describe CampactUserService::Client do
         expect(response['a_field']).to eq 'foo'
         expect(response['another_field']).to eq 'bar'
       end
+    end
+  end
+
+  context 'with HTTP connection stubbed' do
+    before(:each) do
+      WebMock.disable_net_connect!
+    end
+
+    it 'should set Basic Auth authorization header' do
+      stub_get =
+        stub_request(:get, 'https://demo.campact.de/foo/bar')
+          .with(headers: {'Authorization' => 'Basic ' + Base64.strict_encode64('api_user:s3cr3t')})
+          .to_return(status: 200, body: '{}')
+
+      subject = CampactUserService::Client.new(host: 'demo.campact.de', basic_auth: {user: 'api_user', password: 's3cr3t'})
+      subject.get_request('/foo/bar')
+
+      assert_requested(stub_get)
     end
   end
 

@@ -29,8 +29,6 @@ Gem::Specification.new do |spec|
   # Runtime dependencies
   spec.add_dependency "faraday", "~> 2.14"
   spec.add_dependency "json", "~> 2.1"
-  spec.add_dependency "rotp", "~> 6"
-
   # Development dependencies
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "faraday-detailed_logger", "~> 2.1"
