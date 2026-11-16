@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem 'rotp', '~> 6'
 gem 'faraday', '~> 2.14'
-gem 'json', '~> 2.1'
+gem 'json', '>= 2.1', '< 4'
 
 group :development do
   gem 'rake'
@@ -11,7 +11,7 @@ group :development do
   gem 'shoulda', '>= 0'
   gem 'webmock', '>= 0'
   gem 'rdoc', '~> 6.0', '>= 6.0.4'
-  gem 'simplecov', '= 0.16.1'
+  gem 'simplecov', '~> 0.22'
   gem 'pry-byebug', '~> 3.6'
   gem 'faraday-detailed_logger', '~> 2.1', '>= 2.1.2'
   gem 'rubocop'

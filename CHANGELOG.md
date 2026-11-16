@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.3.4] - 2026-11-16
+
+### Dependency updates
+- Allow json 3.x
+
 ## [4.3.3] - 2026-04-22
 - Switch to Basic Auth from TOTP auth
 
